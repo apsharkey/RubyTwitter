@@ -1,0 +1,9 @@
+<%= form_for(current_user.relationships.
+                          build(:followed_id => @user.id),
+                          :remote => true) do |f| %>
+  <div><%= f.hidden_field :followed_id %></div>
+  
+	<div class="actions"><%= link_to "Follow", "#", :onclick=>"$('.new_relationship').submit()", :class => "myFollowButton", :remote => :true %></div>
+
+
+<% end %>

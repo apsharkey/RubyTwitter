@@ -1,0 +1,12 @@
+<div id="settings_filter_container">
+	<ul id="settings_filter">
+		<li><%= link_to "Photo", photo_settings_path,
+		 		:id => "photo_settings_pool", :remote => true %></li>
+		
+		<li><%= link_to "Profile", profile_settings_path,
+		 		:id => "profile_settings_pool", :remote => true %></li>
+		
+		<li><%= link_to "Password", password_settings_path, 
+				:id => "password_settings_pool", :remote => true %></li>
+	</ul>
+</div>

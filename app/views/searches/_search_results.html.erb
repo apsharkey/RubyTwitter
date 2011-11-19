@@ -1,0 +1,154 @@
+<% @results.each do |result| %>
+<% if result.is_a?(Repost) %>
+ 
+<!-- Don't show reposts in feed of others who repost you -->
+<% unless result.poster == current_user %>
+
+<div class="repost_container" class="result">
+
+	<!-- REPOST PICTURE -->
+	<div class="repost_tag">
+	<%= image_tag "../images/repost_tag.png"%>
+	</div>
+
+
+	<div class="repost_content">
+		<!-- PHOTO -->
+		<div class="repost_photo">
+		<% if result.poster.photo.file? %>
+		<%= image_tag result.poster.photo.url(:thumb) %>
+		<% else %>
+		<%= show_default_thumb_for_user(result.poster)%>
+		<% end %>
+		</div>
+
+    	<div class="result_right_side">
+			<!-- USERNAME -->
+			<div class="feed_user_name">
+			<%= link_to result.poster.username, result.poster %>
+			<span class="full_name"><%= "#{result.poster.first_name} #{result.poster.last_name}" %> <%= image_tag "../images/repost.png" %> <%= result.reposter.username %></span>
+			</div>
+
+			<!-- POST -->
+			<span class="repost_text">
+			<%= wrap_text(linkup_mentions_and_hashtags.highlight_search_query((result.content)).html_safe) %>
+
+			</span>
+			<br />
+		
+			<!-- TIMESTAMP -->
+			<div class="feed_timestamp_container">
+				<span class="timestamp">
+				<%= distance_of_time_in_words(result.created_at, Time.now) %> ago.
+				</span>
+			</div>
+		</div>
+	
+		<div class="feed_links_container" class="feed_links">
+
+	</div>
+
+</div>
+<% end %>
+
+<% end %>
+
+
+<% unless result.nil? || result.is_a?(Repost) %>
+
+<div class="feed_container" class="result">
+
+	<!-- PHOTO -->
+	<div class="feed_photo">
+	<% if result.user.photo.file? %>
+	<%= image_tag result.user.photo.url(:thumb) %>
+	<% else %> 
+	<%= show_default_thumb_for_user(result.user) %>
+	<% end %>
+	</div>
+	
+	<div class="result_right_side">
+			<!-- USERNAME -->
+			<div class="feed_user_name">
+			<%= link_to result.user.username, result.user %>
+			<span class="full_name"><%= "#{result.user.first_name} #{result.user.last_name}" %></span>
+			</div>
+
+	
+			<!-- POST -->
+			<% thepost = wrap_text(linkup_mentions_and_hashtags(result.content).html_safe) %>
+
+			<% if params[:q] %>
+				<%= highlight_search_query(thepost, params[:q]) %>
+			<% elsif params[:query] %>
+				<%= highlight_search_query(thepost, params[:query]) %>
+			<% end %>
+			<br />
+			<!-- TIMESTAMP -->
+			<div class="feed_timestamp_container">
+				<span class="timestamp">
+				<%= distance_of_time_in_words(result.created_at, Time.now) %> ago 
+				</span>
+		
+			</div>
+	</div><!-- END result_right_side -->
+	
+	<% unless result.user == current_user %>
+	<div class="feed_links_container" class="feed_links">
+		<ul class="feed_links_list">
+			<li>
+			  <%= image_tag "../images/favorite.png" %>
+			  <%= link_to "Favorite" %>
+			</li>
+			<li>
+			  <%= image_tag "../images/repost.png" %>
+			  <%= link_to "Repost" %>
+			</li>
+			<li>
+			  <%= image_tag "../images/reply.png" %>
+			   <span class="reply"><%= link_to "Reply" %></span>
+			</li>
+			
+			<li>
+			<span class="repost_button">
+			<%= form_for(current_user.reposts.
+			             build(:content => result.content, 
+							   :poster_id => result.user.id,
+							   :reposter_id => current_user.id),
+			                   :remote => true) do |f| %>
+			  <div><%= f.hidden_field :poster_id %></div>
+			  <div><%= f.hidden_field :reposter_id %></div>
+			  <div><%= f.hidden_field :content %></div>
+			  <div class="actions"><%= f.submit "Repost" %></div>
+			<% end %>
+			</span>
+			</li>
+		</ul>
+	</div>
+	<% else %>
+	<div class="feed_links_container" class="feed_links">
+		<ul class="feed_links_list">
+		<li>
+		  <%= image_tag "../images/favorite.png" %>
+		  <%= link_to "Favorite", :class => "feed_link_favorite" %>
+		</li>
+		<li>
+		  <%= image_tag "../images/reply.png" %>
+ 		<span class="reply"><%= link_to "Reply" %></span>
+		</li>
+		<li>
+		  <%= image_tag "../images/trash.png" %>
+		<%= link_to "delete", result, :method => :delete, :confirm => "You sure?",
+		:title => result.content %>
+		</li>
+		</ul>
+	</div>
+	<% end %>
+</div><!-- end feed_container -->
+<% end %>
+
+
+<% end %>
+
+
+

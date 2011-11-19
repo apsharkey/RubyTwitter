@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+  
+  <!-- PROVIDES VERIFICATION FOR GOOGLE -->
+  <meta name="google-site-verification" content="Lh9385gJQysy27O50rJ3wVQSHsv-O5AUPbNidla3-F4" />
+
+  <title><%= @title %></title>
+
+  <%= render 'layouts/stylesheets' %>
+  
+<%= javascript_include_tag "jquery.js", "rails.js", "application.js", "charCount.js", "jquery.tipTip.minified", "jquery.textareaCounter.plugin.js", "jquery.ae.image.resize", "jquery.clickmenu.pack", "jquery.clickmenu", "jquery.clickmenu.js", "jquery.clickmenu.pack.js", "jquery.pageless.js" %>
+  
+<%= csrf_meta_tag %>
+
+</head>
+<body>
+
+  <div class="container">
+
+	<%= render 'layouts/header' %>
+		
+	<section>
+	<div id="god">
+	<%= yield %>
+	</div>
+	</section>
+
+	<div class="whitetext"><%= debug(params) if Rails.env.development? %>
+  </div>
+
+
+</body>
+</html>

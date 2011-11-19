@@ -1,0 +1,25 @@
+<% @users.each do |user| %>
+    <% unless current_user.following?(user) %>
+		<div class="feed_container">
+		<% if user == current_user %>
+		
+		<% else %>
+			<div class="feed_photo">
+			<% if user.photo.file? %>
+			<%= link_to image_tag user.photo(:thumb) %>
+			<% else %>
+				<%= show_default_thumb_for_user(user) %>
+			<% end %>
+			</div>
+			
+		    <div class="feed_user_name">
+			<%= link_to "#{'@' + user.username}", user %>
+			</div>
+		<% end %>
+		
+		</div>
+    <% end %>
+<% end %>
+
+
+

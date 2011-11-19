@@ -1,0 +1,72 @@
+<div class="filter_title"><h1 class="feed_title_color">Reposts by you</h1></div>
+<% unless @reposts.nil? %>
+	<% @reposts.each do |repost| %>
+
+	<!-- Don't show reposts in feed of others who repost you -->
+	<% unless repost.poster == current_user %>
+
+	<div class="repost_container" class="feed_item">
+
+		<!-- REPOST PICTURE -->
+		<div class="repost_tag">
+		<%= image_tag "../images/repost_tag.png"%>
+		</div>
+
+
+		<div class="repost_content">
+		<!-- PHOTO -->
+		<div class="repost_photo">
+		<% if repost.poster.photo.file? %>
+		<%= image_tag repost.poster.photo.url(:thumb) %>
+		<% else %>
+		<%= show_default_thumb_for_user(repost.poster)%>
+		<% end %>
+		</div>
+
+
+	    <div class="feed_item_right_side_repost">
+				<!-- USERNAME -->
+				<div class="feed_user_name">
+				<%= link_to "@"+repost.poster.username, repost.poster %>
+				<span class="full_name"><%= "#{repost.poster.first_name} #{repost.poster.last_name}" %> <%= image_tag "../images/repost.png" %> <%= repost.reposter.username %></span>
+				</div>
+
+				<!-- POST -->
+				<span class="repost_text">
+				<%= wrap_text(linkup_mentions_and_hashtags(repost.content).html_safe) %>
+				</span>
+				<br />
+
+				<!-- TIMESTAMP -->
+				<div class="feed_timestamp_container">
+					<span class="timestamp">
+					<%= distance_of_time_in_words(repost.created_at, Time.now) %> ago.
+					</span>
+				</div>
+		</div>
+
+
+
+		<div class="feed_links_container" class="feed_links">
+			<ul class="feed_links_list">
+
+			<li>
+			  <%= image_tag "../images/reply.png" %>
+	 		<span class="reply"><%= link_to "Reply" %></span>
+			</li>
+			<li>
+			  <%= image_tag "../images/trash.png" %>
+			<%= link_to "delete", repost, :method => :delete, :confirm => "You sure?",
+			:title => repost.content %>
+			</li>
+			</ul>
+		</div>
+		</div>
+
+	</div>
+	
+		
+
+		<% end %>
+	<% end %>
+<% end %>

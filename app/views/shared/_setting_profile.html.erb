@@ -1,0 +1,35 @@
+
+<%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put }) do |f| %>
+  <%= devise_error_messages! %>
+
+
+  <div id="settings_location">
+  <span id="aboutfix" class="label_margin_right"><%= f.label :city, "Location" %></span>
+  <%= f.text_field :city, :class => "round tb" %>
+  </div>
+
+
+
+  <div id="edit_website">
+  <span class="label_margin_right"><%= f.label :website, "Web" %></span>
+  <%= f.text_field :website, :class => "round tb" %>
+  </div>
+
+
+  <div id="edit_about">
+  <span id="aboutfix" class="label_margin_right"><%= f.label :about, "Bio" %></span>
+  <%= f.text_area :about, :class => "round tb", :id => "edit_about_text_area" %>
+  </div>
+
+
+<br />
+<div id="edit_update">
+  <p><%= f.submit "Save" %></p>
+</div>
+<% end %>
+
+<h3>Cancel my account</h3>
+
+<p>Unhappy? <%= link_to "Cancel my account", registration_path(resource_name), :confirm => "Are you sure?", :method => :delete %>.</p>
+
+<%= link_to "Back", :back %>

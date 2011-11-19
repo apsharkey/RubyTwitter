@@ -1,0 +1,120 @@
+<header>
+  <div id="menu">
+		<div id="movingmenu">
+		    <ul id="mainmenu">
+			  <li><div id="logo"><%= link_to logo, root_path %></div></li>
+						<% if user_signed_in? %>
+			<li>
+				
+			<form accept-charset="UTF-8" action="/searches">
+			<%= text_field_tag "q", params[:q], :class => "tb round" %>
+			<input id="search_submit" name="commit" type="submit" value="Search">
+			</form>
+			</li>
+			  <li class="<%= "highlighted" if params[:controller] == "pages" && params[:action] == "home"%>"><%= link_to "Home", root_path %></li>
+
+			  <li class="<%= "highlighted" if params[:controller] == "users" &&   params[:action] == "show"%>"><%= link_to "Profile", current_user %></li>
+			  <li class="<%= "highlighted" if params[:controller] == "users"&&   params[:action] == "index" %>"><%= link_to "Whom to Follow", users_path %></li>
+			  <li id="about_this_site"class="<%= "highlighted" if params[:controller] == "pages"&&   params[:action] == "about" %>"><%= link_to "About this Site", about_path %></li>
+			</ul>
+
+
+
+
+			
+			
+			
+			
+			<ul id="jsddm">
+			<li>
+				<span id="menupic">
+				<% if current_user.photo.file? %>
+					<%= image_tag current_user.photo.url(:thumb), :class => "headerpic" %>
+				<% else %>
+					<%= show_menu_pic(current_user) %>
+				<% end %>
+				</span>
+			<%= link_to current_user.username %>
+				<ul id="submenu">
+					<li><%= link_to "Settings", edit_user_registration_path %></li>
+					<li><%= link_to "Help" %></li>
+					<li><%= link_to "Sign Out", destroy_user_session_path %></li>
+				</ul>
+			</li>
+			</ul>
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			<% else %>
+
+			<div id="menu2"><div class="relative">
+			  <a href="/demos" title="Sign In" id="dd2" class="dropdown" rel="dropdown2" style="width:170px;text-decoration:none;"><span>Sign In</span></a>
+			  <div id="dropdown2" class="dropdown-menu">
+				
+				
+				<%= form_for(:user, :url => user_session_path) do |f| %>
+				  Username
+				  <%= f.text_field :username, :id => "uname", :title => "Username", :class => "tb" %>
+				  Password
+				  <%= f.password_field :password, :class => "tb" %><br />
+				  
+				  <%= f.check_box :remember_me, :class => "floatleft" %>
+				  <%= f.label :remember_me %>
+				  <%= f.submit 'Sign in', :class => "floatright" %><br /><br />
+
+				<% end %>
+				
+				
+				
+				
+				
+				
+				
+				
+			  </div>
+			</div></div>
+			
+			
+			
+			
+			
+			
+			
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		    <% end %>
+      
+ 
+	   </div>
+
+ </div>
+
+</header>

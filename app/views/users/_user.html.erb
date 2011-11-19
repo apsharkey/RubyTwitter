@@ -1,0 +1,50 @@
+
+<div class="feed_container" >
+		<!-- PHOTO -->
+		<span class="feed_photo">
+			<% if user.photo.file? %>
+			<a href="users/<%= user.username %>"><%= image_tag user.photo.url(:thumb) %></a>
+			<% else %>
+			<%= show_default_thumb_for_user(user) %>
+			<% end %>
+		</span>
+		
+		<!-- NAME -->
+	  	<span class="feed_user_name">
+	      <%= link_to "@"+user.username, user %>
+	    </span>
+	<br />
+		<% unless user.about.nil? || user.about.empty? %>
+			<span class="feed_about_user">
+				<%= user.about %>
+			</span>
+		<% end %>
+			<% if current_user.following?(user) %><br />
+				<%= form_for(current_user.relationships.find_by_followed_id(user),
+				             :html => { :method => :delete },
+				             :remote => true) do |f| %>
+				  <div class="actions">
+				  	
+				<input id="relationship_submit" class="myButtonLink" name="commit" type="image" value=" ">
+				  
+				</div>
+				<% end %>
+				
+				
+			<% elsif current_user == user %>
+
+
+			    <% else %>
+				<%= form_for(current_user.relationships.
+				                          build(:followed_id => user.id),
+				                          :remote => true) do |f| %>
+				  <div><%= f.hidden_field :followed_id %></div>
+					
+					<input id="relationship_submit" class="myFollowButton" name="commit" type="image" value=" ">
+				<% end %>
+			<% end %>
+		
+
+		
+		
+  	</div>

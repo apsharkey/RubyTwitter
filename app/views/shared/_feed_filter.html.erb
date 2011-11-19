@@ -1,0 +1,11 @@
+<div id="feed_filter_container">
+	<ul id="feed_filter">
+		<li id="timelineitem"><%= link_to "Timeline", timeline_feed_path, 
+				:id => "timeline_feed_pool", :class => "filter_highlight", :remote => true %></li>
+		<li id="mentionsitem"><%= link_to "@Mentions", mentions_feed_path,
+		 		:id => "mentions_feed_pool", :remote => true %></li>
+		<li id="repostsitem"><%= link_to "Reposts", reposts_feed_path,
+		 		:id => "reposts_feed_pool", :remote => true %></li>
+
+	</ul>
+</div>

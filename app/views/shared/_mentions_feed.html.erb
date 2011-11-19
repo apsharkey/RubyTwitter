@@ -1,0 +1,95 @@
+<div class="filter_title"><h1 class="feed_title_color">
+	Posts mentioning @<%= current_user.username %>
+</h1></div>
+<% unless @mentions.nil? %>
+		
+	<% @mentions.each do |mention| %>
+
+<div class="feed_container" class="mention">
+
+	<!-- PHOTO -->
+	<div class="feed_photo">
+	<% if mention.user.photo.file? %>
+	<%= image_tag mention.user.photo.url(:thumb) %>
+	<% else %> 
+	<%= show_default_thumb_for_user(mention.user) %>
+	<% end %>
+	</div>
+	
+	<div class="mention_right_side">
+			<!-- USERNAME -->
+			<div class="feed_user_name">
+			<%= link_to mention.user.username, mention.user %>
+			<span class="full_name"><%= "#{mention.user.first_name} #{mention.user.last_name}" %></span>
+			</div>
+
+	
+			<!-- POST -->
+			<%= wrap_text(linkup_mentions_and_hashtags(mention.content).html_safe) %>
+			<br />
+			<!-- TIMESTAMP -->
+			<div class="feed_timestamp_container">
+				<span class="timestamp">
+				<%= distance_of_time_in_words(mention.created_at, Time.now) %> ago 
+				</span>
+		
+			</div>
+	</div><!-- END mention_right_side -->
+	
+	<% unless mention.user == current_user %>
+	<div class="feed_links_container" class="feed_links">
+		<ul class="feed_links_list">
+			<li>
+			  <%= image_tag "../images/favorite.png" %>
+			  <%= link_to "Favorite" %>
+			</li>
+			<li>
+			  <%= image_tag "../images/repost.png" %>
+			<span class="repost_button">
+			<%= form_for(current_user.reposts.
+			             build(:content => mention.content, 
+							   :poster_id => mention.user.id,
+							   :reposter_id => current_user.id),
+			                   :remote => true) do |f| %>
+			  <div><%= f.hidden_field :poster_id %></div>
+			  <div><%= f.hidden_field :reposter_id %></div>
+			  <div><%= f.hidden_field :content %></div>
+			  <div class="actions"><%= link_to 'Repost', "#", :onclick=>"$('.new_repost').submit()" %></div>
+
+			<% end %>
+			</span>
+			</li>
+			<li>
+			  <%= image_tag "../images/reply.png" %>
+			   <span class="reply"><%= link_to "Reply" %></span>
+			</li>
+		</ul>
+	</div>
+	<% else %>
+	<div class="feed_links_container" class="feed_links">
+		<ul class="feed_links_list">
+		<li>
+		  <%= image_tag "../images/favorite.png" %>
+		  <%= link_to "Favorite", :class => "feed_link_favorite" %>
+		</li>
+		<li>
+		  <%= image_tag "../images/reply.png" %>
+ 		<span class="reply"><%= link_to "Reply" %></span>
+		</li>
+		<li>
+		  <%= image_tag "../images/trash.png" %>
+		<%= link_to "delete", mention, :method => :delete, :confirm => "You sure?",
+		:title => mention.content %>
+		</li>
+		</ul>
+	</div>
+	<% end %>
+</div><!-- end feed_container -->
+<% end %>
+<% end %>
+
+<div id="results" class="results">
+	
+</div>
+
+

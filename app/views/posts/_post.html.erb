@@ -1,0 +1,88 @@
+
+<div class="feed_container" class="feed_item">
+
+	<!-- PHOTO -->
+	<div class="feed_photo">
+		<% if post.user.photo.file? %>
+		<%= image_tag post.user.photo.url(:thumb) %>
+		<% else %>
+		<%= show_default_thumb_for_user(post.user) %>
+		<% end %>
+	</div>
+	
+	<!-- USERNAME -->
+	<div class="feed_user_name">
+	<%= link_to "@"+post.user.username, post.user %>
+	<span class="full_name"><%= "#{post.user.first_name} #{post.user.last_name}" %></span>
+	</div>
+
+	
+	<!-- MICROPOST -->
+	<%= wrap_text(linkup_mentions_and_hashtags(post.content).html_safe) %>
+	<br />
+	<!-- TIMESTAMP -->
+	<div class="feed_timestamp_container">
+		<span class="timestamp">
+		<%= distance_of_time_in_words(post.created_at, Time.now) %> ago.
+		</span>
+		
+	</div>
+	<% unless post.user == current_user %>
+	<div class="feed_links_container" class="feed_links">
+		<ul class="feed_links_list">
+			<li>
+			  <%= image_tag "../images/favorite.png" %>
+			  <%= link_to "Favorite" %>
+			</li>
+			<li>
+			  <%= image_tag "../images/repost.png" %>
+			  <%= link_to "Repost" %>
+			</li>
+			<li>
+			  <%= image_tag "../images/reply.png" %>
+			   <span class="reply"><%= link_to "Reply" %></span>
+			</li>
+			<li>
+			<span class="repost_button">
+			<%= form_for(current_user.reposts.
+			             build(:content => post.content, 
+							   :poster_id => post.user.id,
+							   :reposter_id => current_user.id),
+			                   :remote => true) do |f| %>
+			  <div><%= f.hidden_field :poster_id %></div>
+			  <div><%= f.hidden_field :reposter_id %></div>
+			  <div><%= f.hidden_field :content %></div>
+			  <div class="actions"><%= f.submit "Repost" %></div>
+			<% end %>
+			</span>
+			</li>
+		</ul>
+	</div>
+	<% else %>
+	<span class="repost_button">
+
+	</span>
+	<div class="feed_links_container" class="feed_links">
+		<ul class="feed_links_list">
+
+		<li>
+		  <%= image_tag "../images/reply.png" %>
+			   <span class="reply"><%= link_to "Reply" %></span>
+		</li>
+		<li>
+		  <%= image_tag "../images/trash.png" %>
+		<%= link_to "delete", post, :method => :delete, :confirm => "You sure?",
+		:title => post.content %>
+		</li>
+		</ul>
+	</div>
+	<% end %>
+</div><!-- end _container -->
+
+
+<div id="results" class="results">
+	
+</div>
+
+
+

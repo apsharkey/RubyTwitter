@@ -1,0 +1,72 @@
+
+
+<div id="stats_following_followers">
+<div id="following_box">
+<span id="following_stat">
+<%= link_to "Following #{@user.following.count}", user_path(@user) %><br />
+</span>
+
+<span id="suggested_user">
+
+<% unless @following_previews.nil? || @following_previews.empty? %>
+
+<% following_count = @following_previews.count %>
+<% i = 0 %>
+<% while i < following_count && i < 7 %>
+<span class="list_photo">
+<% if @following_previews[i].photo.file? %>
+
+<%= link_to (image_tag @following_previews[i].photo.url(:thumb), :class => "resizeme"),
+ 			 @following_previews[i], :class => "phototip resizeme", 
+									 :title =>  @following_previews[i].username %>
+<% else %>
+<% user = @following_previews[i] %>
+<%= link_to show_default_tiny_for_user(user),
+ 			 user, :class => "phototip resizeme", 
+				   :title =>  user.username %>
+
+<% end %>
+</span>
+<% i = i+1 %>
+<% end %>
+<% end %>
+
+
+</span>
+
+
+</div>
+
+
+<div id="followers_box">
+<span id="followers_stat">
+
+<%= link_to "Followers #{@user.followers.count}", user_path(@user) %>
+<br />
+
+</span>
+<% unless @followers_previews.nil? || @followers_previews.empty? %>
+	<% followers_count = @followers_previews.count %>
+	<% i = 0 %>
+	<% while i < followers_count && i < 7 %>
+		<span class="list_photo">
+		<% if @followers_previews[i].photo.file? %>
+			<%= link_to (image_tag @followers_previews[i].photo.url(:thumb), :class => "resizeme"), 
+			 @followers_previews[i] , :class => "phototip", 
+									  :title =>  @followers_previews[i].username %>
+
+		<% else %>
+		<%= link_to show_default_tiny_for_user(@followers_previews[i]),
+		 @followers_previews[i] , :class => "phototip", 
+								  :title =>  @followers_previews[i].username %>
+		<% end %>
+		
+	<% i = i+1 %>
+	<% end %>
+<% end %>
+</span>
+
+
+</div>
+</div>
+

@@ -1,0 +1,36 @@
+
+
+<%= form_for(current_user, :as => current_user, :url => registration_path(current_user), :html => { :method => :put }) do |f| %>
+
+
+<div id="edit_title_essentials">Essentials</div>
+  <br />
+  <div id="edit_email">
+  <span class="label_margin_right"><%= f.label :email %></span>
+  <%= f.text_field :email, :class => "round tb" %>
+  </div>
+
+
+<div id="edit_title_optional">Optional</div>
+  <div id="edit_about">
+  <span id="aboutfix" class="label_margin_right"><%= f.label :about %></span>
+  <%= f.text_area :about, :class => "round tb", :id => "edit_about_text_area" %>
+  </div>
+
+  <div id="edit_website">
+  <span class="label_margin_right"><%= f.label :website %></span>
+  <%= f.text_field :website, :class => "round tb" %>
+  </div>
+
+
+<br />
+<div id="edit_update">
+  <p><%= f.submit "Update" %></p>
+</div>
+<% end %>
+
+<h3>Cancel my account</h3>
+
+<p>Unhappy? <%= link_to "Cancel my account", registration_path(current_user), :confirm => "Are you sure?", :method => :delete %>.</p>
+
+<%= link_to "Back", :back %>

@@ -1,0 +1,13 @@
+<div id="profile_filter_container">
+	<ul id="profile_filter">
+		<li id="timelineitem"><%= link_to "Timeline", profile_feed_user_path, 
+				:id => "profile_feed_pool", :remote => true %></li>
+		<li id="followingitem"><%= link_to "Following", following_user_path, 
+				:id => "following_feed_pool", :remote => true %></li>
+		<li id="followersitem"><%= link_to "Followers", followers_user_path, 
+				:id => "followers_feed_pool", :remote => true %></li>
+
+	</ul>
+</div>
+
+

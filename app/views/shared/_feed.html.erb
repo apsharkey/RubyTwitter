@@ -1,0 +1,14 @@
+<% if @feed_items.any? %>
+
+	<div id="feed_pool">
+	<%= render :partial => 'shared/feed_item', :collection => @feed_items %>
+	
+	<ul id="feed_list">
+
+	</ul>
+
+
+	<%= pageless(@feed_items.total_pages, feed_path, "#feed_pool") %>
+	</div>
+<% end %> 
+

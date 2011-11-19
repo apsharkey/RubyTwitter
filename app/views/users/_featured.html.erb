@@ -1,0 +1,19 @@
+<h3 id="featured_title" class="whitetext">Featured</h3><br/ >
+<% unless @AndySharkey.nil? %>
+	  <% @AndySharkey.each do |andy| %>
+	  <div id="andybox">
+		<div class="_photo">
+		<% if andy.photo.file? %>
+		<%= image_tag andy.photo(:thumb) %></div>
+		<% else %>
+		<%=show_default_thumb_for_user(andy) %>
+		<% end %>
+	  <%= link_to "@"+andy.username, user_path(andy) %>
+	  <span class="smallertext"><%= andy.first_name + " " + andy.last_name %>
+	<br />
+	  <span class="graytext"><%= andy.about %></span</span>
+		</div>
+	
+	<% end %>
+	</div>
+<% end %>

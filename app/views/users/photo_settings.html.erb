@@ -1,0 +1,21 @@
+	<%= form_for(resource, :html => { :multipart => true }, 
+		:as => resource_name, :url => 	registration_path(resource_name)) do |f| %>
+	<%= devise_error_messages! %>
+
+	<div id="upload_photo" class="field">
+	<% if current_user.photo.file? %>
+		<%= image_tag current_user.photo(:small) %>
+	<% else %>
+		<%= show_default_small_for_user(current_user)%>
+	<% end %><br />
+
+	<%= f.label :photo, "Upload Photo" %><br/>
+	<%= f.file_field :photo %>
+	<p>
+	</div>
+
+	<div id="create_my_account">
+	  <br />
+	  <p><%= f.submit "Upload" %></p>
+	</div>
+	<% end %>

@@ -1,0 +1,62 @@
+
+
+<div id="left_side">
+
+
+	<!-- >>>>> USER INFO -->
+	<div id="profile" class="round">
+	<div id="profile_top">
+	  <div id="profile_photo">
+		<% if @user.photo.file? %>
+		<%= link_to (image_tag @user.photo.url(:small)), @user.photo.url(:small)%>
+		<% else %>
+			<%= link_to show_default_small_for_user(@user) %>
+		<% end %>
+      </div>
+		<br />
+	  <span id="profile_name">
+	   <%= "#{@user.first_name} #{@user.last_name}" %><br />
+	   </span>
+	<span id="profile_username">
+	<%= "@"+@user.username %>
+	</span>
+	<br />
+		<div id="profile_bio">
+		<% unless @user.about.blank? %>
+			<%= @user.about %>
+		<% end %>
+		</div>
+		
+		<div id="profile_website">
+		<% unless @user.website.blank? %>
+		<p><%= link_to @user.website, "http://" + @user.website %></p>
+		<% end %>
+		</div>
+		
+	</div><!-- END profile_top -->
+		
+
+		<% unless current_user == @user %>
+			<div id="profile_follow_form">
+			<%= render 'follow_form' if user_signed_in? %>
+			</div >
+
+		<% end %>
+
+		
+		
+		<%= render :partial => "profile_filter" %>
+		
+		<div id="profile_pool">			
+			<% if @feed_items.any? %>
+				<%= will_paginate @feed_items %>
+				<%= render :partial => 'shared/feed_item', :collection => @feed_items %>
+				<%= will_paginate @feed_items %>
+			<% end %>
+		</div>
+		
+
+
+</div>
+</div>
+

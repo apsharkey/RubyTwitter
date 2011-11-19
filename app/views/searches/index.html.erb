@@ -1,0 +1,31 @@
+<div id="god">
+<div id="right_side" class="round">
+	
+</div>
+
+
+<div id="left_side" class="round">
+
+<br />
+<br />
+
+<div id="search_nav_container">
+	<% if @search_posts %>
+		<h1><span id="search_results_title">Results for <span class="bold">
+		<% if params[:q] %>
+			<%= params[:q] %>
+		<% elsif params[:query] %>
+			<%= params[:query] %>
+		<% end %>
+		</span>
+		</span>
+		</h1>
+		<%= render "search_results" %>
+	<% end %>
+</div>
+
+</div>
+</div>
+
+
+

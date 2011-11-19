@@ -1,0 +1,24 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  content: MyString
+  rank: 1
+  times_used: 1
+
+two:
+  content: MyString
+  rank: 1
+  times_used: 1
+
+# == Schema Information
+#
+# Table name: trends
+#
+#  id         :integer(4)      not null, primary key
+#  content    :string(255)
+#  rank       :integer(4)
+#  times_used :integer(4)
+#  created_at :datetime
+#  updated_at :datetime
+#
+

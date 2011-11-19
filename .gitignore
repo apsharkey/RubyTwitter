@@ -1,0 +1,13 @@
+.bundle
+db/*.sqlite3*
+log/*.log
+*.log
+tmp/**/*
+tmp/*
+doc/api
+doc/app
+*.swp
+*~
+.DS_Store
+config/heroku_env.rb
+lib/tasks/sample_data.rake

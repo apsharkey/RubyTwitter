@@ -1,0 +1,33 @@
+<div id="sidebar_home_top">
+	<span id="yourposts">
+	Your Posts <%= current_user.posts.count + current_user.reposts.count %>
+	</span>
+
+	<br />
+
+
+	<span  id="user_photo">
+
+	<% if current_user.photo.file? %>
+	<%= link_to (image_tag current_user.photo.url(:thumb), { 	:class =>
+	 "resize_homepage"} ), user_path(current_user), :title => current_user.username %>
+	<% else %>
+		<%= show_default_homepage(current_user)%>
+	<% end %>
+
+	</span>
+
+	<div id="last_post">
+		<% if current_user.posts.any? %>
+		  <span id="last_post_time_ago">
+		    <%= link_to time_ago_in_words(current_user.posts.first.created_at)+" ago", user_path(current_user) %> 
+			</span>
+		<span id="last_post_content">
+		    <%= wrap(linkup_mentions_and_hashtags(current_user.posts.first.content).html_safe) %>
+		
+		  </span>
+		<% end %>
+	</div>
+</div>
+
+<%= render 'shared/stats' %>

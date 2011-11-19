@@ -1,0 +1,56 @@
+<div id="who_to_follow">
+  <div id="who_to_follow_title">Who to follow</div>
+  	  <div id="suggestions_title">Suggestions for you <%= link_to "view all", users_path %></div>
+  <div id="suggestion_container">
+
+    <% i = 0 %>
+
+	<% unless @suggestions.nil? %>
+	<% @suggestions.each do |s| %>
+	  <% break if i > 3 %>
+	  <% if !current_user.following?(s) && current_user != s  %>
+
+		    <div id="suggestion">
+	  		  <span id="suggestion_photo">
+			  <% if s.photo.file? %>
+			  <%= link_to (image_tag s.photo.url(:thumb), :class => "resize_suggestion"), user_path(s) %>
+			  <% else %>
+				<%= link_to show_default_suggestion(s), user_path(s) %>
+			  <% end %>
+			  </span>
+			
+			<ul id="suggestions_list">
+			<div class="suggested_user">
+ 			<li><%= link_to "#{s.username}", "users/"+s.username %></li>
+			</div>
+			
+			<li><div class="actions follow_button"><%= link_to 'Follow', "#", :onclick=>"$('.new_relationship').submit()", :remote => :true %></div>
+			</li>
+			</ul>
+  			<br />
+			<div class="suggested_user_fullname"><%= "#{s.first_name} #{s.last_name}"%></div>
+	          <div id="follow_form">
+			  <%= form_for(current_user.relationships.
+			               build(:followed_id => s.id),
+			                     :remote => true) do |f| %>
+			  <div><%= f.hidden_field :followed_id %></div>
+			
+
+
+			  <% end %>
+			  </div> <!-- END follow_form -->
+		</div> <!-- END suggestion -->
+			<% i = i + 1%>
+
+	  <% else %>
+	
+	  <% end %> <!-- END break if i > 3 -->
+	<% end %> <!-- END @suggestions.each -->
+	<% end %>
+	
+	<%= link_to "Refresh suggestions", :onclick =>"$('suggestion_container').load('/pages/home')", :remoate => :true %><br />
+	<%= link_to "Browse Interests", users_path %>
+	<span id="find_friends_link"><%= link_to "Find friends", users_path %></span>
+</div> <!-- END suggestion_container -->
+
+</div> <!-- END who_to_follow -->

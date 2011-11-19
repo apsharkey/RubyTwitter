@@ -1,0 +1,41 @@
+
+
+<title><%= @title %></title>
+
+<% if user_signed_in? %>
+
+<div id="right_side" class="round"> 			  
+	<%= render 'users/sidebar_home' %> 	  
+</div>
+
+<div id="left_side" class="round">
+	
+	<%= render "shared/post_form" %>
+	<%= render "shared/feed_filter" %>
+	<%= render "shared/feed" %>
+</div>
+<% else %>
+
+
+<div id="welcome_container">
+	
+	<div id="welcome_message"><h2 class="whitetext">Welcome to TwitterEnvy!</h2><h3><%= link_to "New User? Sign up now!", new_user_registration_path %></h3> </div>
+
+	<div class="screenshot_container"><%= image_tag "../images/screenshot_post.png" %></div>
+	<div class="screenshot_container"><%= image_tag "../images/screenshot_profile.png" %></div>
+	<div class="screenshot_container"><%= image_tag "../images/screenshot_search.png" %></div>
+	<div class="screenshot_container"><%= image_tag "../images/screenshot_follow.png" %></div>
+	<div class="screenshot_container"><%= image_tag "../images/screenshot_whotofollow.png" %></div>		
+
+	<div class="screenshot_container_no_border">
+	<div id="andyphoto"><%= image_tag "andy.jpg"%></div>
+	My name is <%= link_to "Andy Sharkey", "http://www.andysharkey.com" %>, and I am the creator of TwitterEnvy.
+	 <br /><br />
+	TwitterEnvy is an open source Twitter-clone coded in Ruby on Rails 3 and jQuery. 
+	 <br /><br />
+	Read the <%= link_to "full story here.", about_path %>
+	<br />
+	</div>
+</div> <!-- END welcome_container -->
+	<div id="welcome_footer"></div>
+<% end %>

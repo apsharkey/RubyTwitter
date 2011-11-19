@@ -1,0 +1,44 @@
+	<div id="right_side" class="round">
+		<span  id="user_photo">
+			
+			<% if @user.photo.file? %>
+				  <%= image_tag @user.photo.url(:thumb), { :class => "resize_homepage"} %>
+
+			<% else %>
+					<%= show_default_thumb_for_user(@user)%>
+			<% end %>
+
+		</span>
+			
+		<% unless @user == current_user %>	
+		<span id="about_user_title">About @<%= @user.username %></span>
+		<% else %>
+		<span id="about_user_title">About you</span>
+		<% end %>
+
+		<br />	
+		<br />
+	<br />
+		<div id="profile_stats">
+			<span id="profile_stats_post">
+			<%= @user.posts.count %><br />
+			<%= link_to "Posts", user_path %>
+			</span>
+		
+			<span id="profile_stats_following">
+			<%= @user.following.count %><br />
+			<%= link_to "Following", user_path %>
+			</span>
+		
+			<span id="profile_stats_followers">
+			<%= @user.followers.count %><br />
+			<%= link_to "Followers", user_path %>
+			</span>
+
+		</div> <!-- END profile_stats -->
+	
+	
+		<%= render 'shared/relationship_stats' %>
+		
+
+</div> <!-- END right_side -- >

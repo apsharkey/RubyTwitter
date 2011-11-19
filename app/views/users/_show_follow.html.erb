@@ -1,0 +1,12 @@
+<div id="extra information">
+<h1><%= @title %></h1>
+
+<% if @users.any? %>
+			<%= will_paginate %>
+	<%= render @users %>
+			<%= will_paginate %>
+<% end %>
+
+
+	
+</div>

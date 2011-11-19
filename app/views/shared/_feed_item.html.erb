@@ -1,0 +1,158 @@
+
+<% if feed_item.is_a?(Repost) %>
+ 
+<!-- Don't show reposts in feed of others who repost you -->
+<% unless feed_item.poster == current_user %>
+
+<div class="repost_container" class="feed_item" class="block">
+	
+	<!-- REPOST PICTURE -->
+	<div class="repost_tag">
+	<%= image_tag "../images/repost_tag.png"%>
+	</div>
+
+	<div class="repost_content">
+		<!-- PHOTO -->
+		<div class="repost_photo">
+		<% if feed_item.poster.photo.file? %>
+		<%= image_tag feed_item.poster.photo.url(:thumb) %>
+		<% else %>
+		<%= show_default_thumb_for_user(feed_item.poster)%>
+		<% end %>
+		</div>
+
+	
+    	<div class="feed_item_right_side">
+			<!-- USERNAME -->
+			<div class="feed_user_name">
+			<%= link_to feed_item.poster.username, feed_item.poster %>
+			<span class="full_name"><%= "#{feed_item.poster.first_name} #{feed_item.poster.last_name}" %> <%= image_tag "../images/repost.png" %> <%= feed_item.reposter.username %></span>
+			</div>
+	
+			<!-- POST -->
+			<span class="repost_text">
+			<%= wrap_text(linkup_mentions_and_hashtags(feed_item.content).html_safe) %>
+			</span>
+			<br />
+			
+			<!-- TIMESTAMP -->
+			<div class="feed_timestamp_container">
+				<span class="timestamp">
+				<%= distance_of_time_in_words(feed_item.created_at, Time.now) %> ago.
+				</span>
+			</div>
+		</div>
+		<div class="feed_links_container" class="feed_links">
+			<ul class="feed_links_list">
+			<li>
+			  <%= image_tag "../images/reply.png" %>
+	 		<span class="reply"><%= link_to "Reply" %></span>
+			</li>
+			<li>
+			  <%= image_tag "../images/trash.png" %>
+			<%= link_to "delete", feed_item, :method => :delete, :confirm => "You sure?",
+			:title => feed_item.content %>
+			</li>
+			</ul>
+		</div>
+
+	
+
+
+	</div>
+	
+</div>
+<% end %>
+<% end %>
+
+
+<% unless feed_item.nil? || feed_item.is_a?(Repost) %>
+	<div class="feed_container feed_item block" id="<%= feed_item.id %>">
+
+
+	<!-- PHOTO -->
+	<div class="feed_photo">
+	<% if feed_item.user.photo.file? %>
+	<%= image_tag feed_item.user.photo.url(:thumb) %>
+	<% else %> 
+	<%= show_default_thumb_for_user(feed_item.user) %>
+	<% end %>
+	</div>
+
+	
+	<div class="feed_item_right_side">
+			<!-- USERNAME -->
+			<div class="feed_user_name">
+			<%= link_to feed_item.user.username, feed_item.user %>
+			<span class="full_name"><%= "#{feed_item.user.first_name} #{feed_item.user.last_name}" %></span>
+			</div>
+
+	
+			<!-- POST -->
+			<div class="post_content">
+			<%= wrap_text(linkup_mentions_and_hashtags(feed_item.content).html_safe) %>
+			</div>
+
+			<!-- TIMESTAMP -->
+			<div class="feed_timestamp_container">
+				<span class="timestamp">
+				<%= link_to distance_of_time_in_words(feed_item.created_at, Time.now)+" ago"%> 
+				</span>
+		
+			</div>
+	</div><!-- END feed_item_right_side -->
+	
+	<% unless feed_item.user == current_user %>
+	<div class="feed_links_container" class="feed_links">
+		<ul class="feed_links_list">
+			<li>
+			  <%= image_tag "../images/favorite.png" %>
+			  <%= link_to "Favorite" %>
+			</li>
+			<li>
+			  <%= image_tag "../images/repost.png" %>
+			<span class="repost_button">
+			<%= form_for(current_user.reposts.
+			             build(:content => feed_item.content, 
+							   :poster_id => feed_item.user.id,
+							   :reposter_id => current_user.id),
+			                   :remote => true) do |f| %>
+			  <div><%= f.hidden_field :poster_id %></div>
+			  <div><%= f.hidden_field :reposter_id %></div>
+			  <div><%= f.hidden_field :content %></div>
+			  <div class="actions"><%= link_to 'Repost', "#", :onclick=>"$('.new_repost').submit()" %></div>
+
+			<% end %>
+			</span>
+			</li>
+			<li>
+			  <%= image_tag "../images/reply.png" %>
+			   <span class="reply"><%= link_to "Reply" %></span>
+			</li>
+		</ul>
+	</div>
+	
+	<% else %>
+	<div class="feed_links_container" class="feed_links">
+		<ul class="feed_links_list">
+		<li>
+		  <%= image_tag "../images/favorite.png" %>
+		  <%= link_to "Favorite", :class => "feed_link_favorite" %>
+		</li>
+		<li>
+		  <%= image_tag "../images/reply.png" %>
+ 		<span class="reply"><%= link_to "Reply" %></span>
+		</li>
+		<li>
+		  <%= image_tag "../images/trash.png" %>
+		<%= link_to "delete", feed_item, :method => :delete, :confirm => "You sure?",
+		:title => feed_item.content %>
+		</li>
+		</ul>
+	</div>
+	<% end %>
+	
+</div><!-- end feed_container -->
+
+<% end %>
+

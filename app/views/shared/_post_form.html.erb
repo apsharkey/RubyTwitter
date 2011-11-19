@@ -1,0 +1,22 @@
+<div id="post_title">What's happening?</div>
+<div id="form_box">
+	  <%= form_for(@post) do |f| %>
+	  <%= render 'shared/error_messages', :object => f.object %>
+
+
+		  <div id="textbox" class="tb">
+			<%= f.text_area :content, :id => "post_textarea" %>
+		  </div>
+
+	
+	  <div id="post_button" class="post_button">
+		<%= f.submit "Post", :class => "button", :id=>"button", :remote => true %>
+	  </div>
+
+	  <div id="post_geolocation">
+	  <span class="geolocation_link"><%= image_tag "target.png" %> <%= link_to "Add your location" %></span>
+	<span class="user_geolocation">	<%= "#{@location[:city]}, #{@location[:region_name]}" %> <%= link_to "x" %></span> <br />
+	  </div>
+	
+	<% end %>
+</div>

@@ -1,0 +1,15 @@
+<div id="trending">
+		<h1 class="whitetext">Trends</h1>
+		<% i = 0 %>
+		<% unless @posts.nil? %>
+		<% @posts.each do |p| %>
+			<% break if i > 9 %>
+			<% trend = grab_trend(p.content) %>
+			<% unless trend.blank? %>
+			  <% t = truncate(trend.to_s, :length => 19) %>
+			  <%= link_to t, "/search/"+t %><br />
+			  <% i = i + 1 %>
+			<% end %>
+	   <% end %>
+	   <% end %>
+</div>

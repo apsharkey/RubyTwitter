@@ -1,0 +1,12 @@
+<% @user ||= current_user %>
+
+<%= render 'shared/relationship_stats' %>
+
+<div id="sidebar_middle_container">
+<%= render 'shared/trending' %>
+<%= render 'shared/suggestions' %>
+</div>
+
+<div id="links_container">
+<%= render 'users/links' %>
+</div>

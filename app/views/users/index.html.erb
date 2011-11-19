@@ -1,0 +1,36 @@
+   <title><%= @title %></title>
+
+<div id="god">
+
+<div id="right_side" class="round"><%= render "featured" %></div>
+
+<div id="left_side" class="round">
+<h1 id="find_people_title">Find People</h1>
+
+Currently <%= @total_users.count %> users are registered. <br />
+
+		<ul id="find_people_nav_list">
+			<li><%= link_to "All Users", "/users/", 
+					:id => "all_users_pool", :remote => true %></li>
+
+			<li><%= link_to "Following", following_user_path(current_user), 
+					:id => "following_users_pool", :remote => true %></li>
+
+			<li><%= link_to "Followers", followers_user_path(current_user), 
+					:id => "followers_users_pool", :remote => true %></li>
+
+
+		</ul>
+
+		<div id="user_pool">
+			<%= will_paginate @users %>
+
+			<%= render @users %>
+
+			<%= will_paginate @users %>
+			
+		</div>
+
+</div>
+
+</div>
